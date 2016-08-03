@@ -1,0 +1,6 @@
+access_key = "An AWS access key"
+secret_key = "AN AWS secret key"
+region = "region"
+domain = "example.com"
+dnsimple_email = "foo@example.com"
+dnsimple_token = "a-dnsimple-api-v1-token"
