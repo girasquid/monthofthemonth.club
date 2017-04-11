@@ -8,8 +8,8 @@ variable "secret_key" {
 variable "region" {
   description = "AWS region"
 }
-variable "dnsimple_email" {
-  description = "Email on the DNSimple account"
+variable "dnsimple_account" {
+  description = "DNSimple account ID"
 }
 variable "dnsimple_token" {
   description = "DNSimple API v1 token"
@@ -27,7 +27,7 @@ provider "aws" {
 
 provider "dnsimple" {
   token = "${var.dnsimple_token}"
-  email = "${var.dnsimple_email}"
+  account = "${var.dnsimple_account}"
 }
 
 resource "aws_s3_bucket" "website" {
@@ -67,22 +67,25 @@ resource "aws_s3_bucket_object" "index" {
   bucket = "${aws_s3_bucket.website.id}"
   key = "index.html"
   source = "index.html"
-  etag = "${md5(file(\"index.html\"))}"
+  etag = "${md5(file("index.html"))}"
   content_type = "text/html"
+  acl = "public-read"
 }
 
 resource "aws_s3_bucket_object" "basscss" {
   bucket = "${aws_s3_bucket.website.id}"
   key = "basscss.min.css"
   source = "basscss.min.css"
-  etag = "${md5(file(\"basscss.min.css\"))}"
+  etag = "${md5(file("basscss.min.css"))}"
   content_type = "text/css"
+  acl = "public-read"
 }
 
 resource "aws_s3_bucket_object" "header" {
   bucket = "${aws_s3_bucket.website.id}"
   key = "header.jpeg"
   source = "header.jpeg"
-  etag = "${md5(file(\"header.jpeg\"))}"
+  etag = "${md5(file("header.jpeg"))}"
   content_type = "image/jpeg"
+  acl = "public-read"
 }
